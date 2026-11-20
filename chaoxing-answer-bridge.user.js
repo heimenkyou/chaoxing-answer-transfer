@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name         超星作业答案桥
+// @name         超星作业答案转移（抄作业）助手
 // @namespace    https://github.com/heimenkyou/chaoxing-answer-bridge
-// @version      1.2.0
-// @description  从作业或考试页提取答案，在另一账号按题目 id + 选项文本回填
+// @version      1.2.1
+// @description  从作业或考试页提取答案，跨账号一键复制或导出文件批量自动回填
 // @author       heimenkyou
 // @license      GPL-3.0
-// @homepageURL  https://github.com/heimenkyou/chaoxing-answer-bridge
-// @supportURL   https://github.com/heimenkyou/chaoxing-answer-bridge/issues
-// @updateURL    https://raw.githubusercontent.com/heimenkyou/chaoxing-answer-bridge/main/chaoxing-answer-bridge.user.js
-// @downloadURL  https://raw.githubusercontent.com/heimenkyou/chaoxing-answer-bridge/main/chaoxing-answer-bridge.user.js
+// @homepageURL  https://github.com/heimenkyou/chaoxing-answer-transfer
+// @supportURL   https://github.com/heimenkyou/chaoxing-answer-transfer/issues
+// @updateURL    https://raw.githubusercontent.com/heimenkyou/chaoxing-answer-transfer/main/chaoxing-answer-transfer.user.js
+// @downloadURL  https://raw.githubusercontent.com/heimenkyou/chaoxing-answer-transfer/main/chaoxing-answer-transfer.user.js
 // @match        *://*.chaoxing.com/*
 // @grant        GM_setClipboard
 // @grant        GM_setValue
@@ -48,7 +48,7 @@
 
   function log(...args) {
     const line = args.map(a => (typeof a === 'string' ? a : JSON.stringify(a))).join(' ')
-    console.log('[答案桥]', line)
+    console.log('[答案转移]', line)
     if (window.__cxBridgeLog) window.__cxBridgeLog(line)
   }
 
@@ -690,7 +690,7 @@
     const mode = detectMode()
     state.mode = mode
 
-    const title = el('b', { textContent: '答案桥' })
+    const title = el('b', { textContent: '答案转移' })
     const badge = el('span', { className: 'badge', textContent: mode === 'extract' ? '提取模式' : '填写模式' })
     const btnClose = el('button', { textContent: '×', title: '隐藏面板（点浏览器扩展图标的菜单可再次打开）' })
     const header = el('div', { className: 'h' }, [title, badge, el('span', { className: 'sp' }), btnClose])
@@ -777,7 +777,7 @@
     const source = payload.meta?.source === 'mine' ? '我的答案' : '正确答案'
     const base = (payload.meta?.name || payload.meta?.workId || '作业').slice(0, 40)
     // 文件名不能带路径分隔符等字符
-    const name = `答案桥-${base}-${source}-${stamp}.json`.replace(/[\\/:*?"<>|\r\n]+/g, '_')
+    const name = `超星答案-${base}-${source}-${stamp}.json`.replace(/[\\/:*?"<>|\r\n]+/g, '_')
     const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }))
     const a = el('a', { href: url, download: name })
     document.body.append(a)
@@ -920,7 +920,7 @@
       try {
         const p = JSON.parse(ta.value)
         if (!p || !Array.isArray(p.items)) {
-          stats.innerHTML = '<span style="color:#dc2626">内容不是答案桥导出的答案</span>'
+          stats.innerHTML = '<span style="color:#dc2626">内容不是有效的答案转移数据</span>'
           return null
         }
         state.payload = p
@@ -1062,7 +1062,7 @@
     document.head.append(el('style', { textContent: CSS }))
 
     if (typeof GM_registerMenuCommand === 'function') {
-      GM_registerMenuCommand('答案桥：显示 / 隐藏面板', togglePanel)
+      GM_registerMenuCommand('答案转移：显示 / 隐藏面板', togglePanel)
     }
     // 无 GM 环境（如手动注入调试）时的入口
     window.__cxBridge = togglePanel
