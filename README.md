@@ -1,5 +1,7 @@
 # 超星作业答案转移（抄作业）助手 (Chaoxing Answer Transfer)
 
+![访问量](https://count.getloli.com/get/@chaoxing-answer-transfer?theme=moebooru)
+
 这是一个帮你在超星学习通上一键「抄作业」的轻量级浏览器脚本。
 
 当一个人（账号 B）做完作业或考试后，可以通过脚本一键导出答案文件，发给另一个人（账号 A）导入并自动填报；也可以在同一台电脑的不同浏览器间，通过剪贴板一键将答案复制粘贴过来，自动完成题目比对并批量勾选填写。
@@ -20,7 +22,8 @@
 
 安装脚本管理器后，点击下方链接安装本脚本：
 
-👉 **[点击安装超星作业答案转移（抄作业）助手](https://raw.githubusercontent.com/heimenkyou/chaoxing-answer-transfer/main/chaoxing-answer-transfer.user.js)**
+👉 **[点击安装超星作业答案转移（抄作业）助手](https://raw.githubusercontent.com/heimenkyou/chaoxing-answer-transfer/main/chaoxing-answer-transfer.user.js)**  
+国内网络访问较慢时，可改用 Gitee 镜像：[点此安装](https://gitee.com/heimenkyou/chaoxing-answer-transfer/raw/main/chaoxing-answer-transfer.user.js)
 
 浏览器将自动弹出安装确认窗口，点击「安装」即可。如果是多台设备或两个浏览器配合使用，需要在各端分别安装此脚本。
 
